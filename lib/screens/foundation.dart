@@ -1,31 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../screens/settings.dart';
 import '../screens/home.dart';
+import '../bloc/appbarmenu/appbarmenu_bloc.dart';
 
 class FoundationPage extends StatelessWidget {
   const FoundationPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('LockNLube', style: TextStyle(fontSize: 18)),
-        centerTitle: true,
-        backgroundColor: Colors.white,
-        elevation: 0.0,
-        leading: IconButton(icon: Icon(Icons.menu), onPressed: () {}),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.settings),
-            onPressed: () {
-              Navigator.of(
-                context,
-              ).push(MaterialPageRoute(builder: (_) => SettingsPage()));
-            },
+    final appMenuBloc = context.read<AppMenuBloc>();
+
+    return BlocBuilder<AppMenuBloc, bool>(
+      builder:
+          (context, state) => Scaffold(
+            appBar: AppBar(
+              title: Text('LockNLube', style: TextStyle(fontSize: 18)),
+              centerTitle: true,
+              backgroundColor: Colors.white,
+              elevation: 0.0,
+              leading: IconButton(
+                onPressed: () {
+                  appMenuBloc.add(AppMenuChangeState());
+                },
+                icon: Icon(
+                  appMenuBloc.state == false ? Icons.menu : Icons.cancel,
+                ),
+              ),
+              actions: [
+                IconButton(
+                  icon: Icon(Icons.settings),
+                  onPressed: () {
+                    Navigator.of(
+                      context,
+                    ).push(MaterialPageRoute(builder: (_) => SettingsPage()));
+                  },
+                ),
+              ],
+            ),
+            body: HomePage(),
           ),
-        ],
-      ),
-      body: HomePage(),
     );
   }
 }

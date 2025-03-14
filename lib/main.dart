@@ -1,6 +1,8 @@
 // this project is targeting locknlube.com's mobile site
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'bloc/appbarmenu/appbarmenu_bloc.dart';
 import 'screens/foundation.dart';
 
 void main() {
@@ -19,7 +21,10 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
       ),
-      home: FoundationPage(),
+      home: MultiBlocProvider(
+        providers: [BlocProvider(create: (context) => AppMenuBloc())],
+        child: FoundationPage(),
+      ),
     );
   }
 }
