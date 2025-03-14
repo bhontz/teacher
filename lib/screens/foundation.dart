@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../screens/settings.dart';
 import '../screens/home.dart';
+import '../screens/menu.dart';
 import '../bloc/appbarmenu/appbarmenu_bloc.dart';
 
 class FoundationPage extends StatelessWidget {
@@ -38,35 +39,30 @@ class FoundationPage extends StatelessWidget {
                 ),
               ],
             ),
-            body: HomePage(),
+            // body: HomePage(),
+            body: NavigatorWidget(),
           ),
     );
   }
 }
 
-// class NavigatorWidget extends StatelessWidget {
-//   const NavigatorWidget({super.key});
+class NavigatorWidget extends StatelessWidget {
+  const NavigatorWidget({super.key});
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Navigator(
-//       onGenerateRoute:
-//           (RouteSettings settings) =>
-//               MaterialPageRoute(builder: (_) => Placeholder()),
+  @override
+  Widget build(BuildContext context) {
+    final appMenuBloc = context.read<AppMenuBloc>();
 
-//       // initialRoute: '/',
-//       // onGenerateRoute: (RouteSettings settings) {
-//       //   Widget page;
-//       //   switch (settings.name) {
-//       //     case '/':
-//       //       page = Settings();
-//       //       break;
-//       //     default:
-//       //       page = Placeholder();
-//       //       break;
-//       //   }
-//       //   return MaterialPageRoute(builder: (_) => page);
-//       // },
-//     );
-//   }
-// }
+    return BlocBuilder<AppMenuBloc, bool>(
+      builder:
+          (context, state) => Navigator(
+            onGenerateRoute: (RouteSettings settings) {
+              return MaterialPageRoute(
+                builder:
+                    (_) => appMenuBloc.state == false ? HomePage() : MenuPage(),
+              );
+            },
+          ),
+    );
+  }
+}
