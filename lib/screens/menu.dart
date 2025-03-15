@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'about.dart';
 
 class MenuPage extends StatelessWidget {
   const MenuPage({super.key});
@@ -8,9 +9,11 @@ class MenuPage extends StatelessWidget {
     return Center(
       child: ElevatedButton(
         onPressed: () {
-          Navigator.of(context).pop();
+          Navigator.of(
+            context,
+          ).push(MaterialPageRoute(builder: (context) => const AboutPage()));
         },
-        child: Text("This is the MENU PAGE!"),
+        child: Text("THIS IS THE MENU PAGE.  Press to Go to ABOUT PAGE"),
       ),
     );
   }

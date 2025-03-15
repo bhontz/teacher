@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../screens/settings.dart';
 import '../screens/home.dart';
 import '../screens/menu.dart';
+// import '../screens/about.dart';
 import '../bloc/appbarmenu/appbarmenu_bloc.dart';
 
 class FoundationPage extends StatelessWidget {
@@ -39,7 +40,6 @@ class FoundationPage extends StatelessWidget {
                 ),
               ],
             ),
-            // body: HomePage(),
             body: NavigatorWidget(),
           ),
     );
