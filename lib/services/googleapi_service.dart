@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer'
+    as log_dev; // provide a print() debug function to the debug console
 import 'package:http/http.dart' as http;
 import '../models/book_model.dart';
 
 class GoogleAPIService {
   final String url =
-      'https://www.googleapis.com/books/v1/volumes?q=inauthor:King';
+      'https://www.googleapis.com/books/v1/volumes?q=inauthor:arthur+c+clarke&maxResults=35';
 
   Future<List<Book>> fetchPotterBooks() async {
     final res = await http.get(Uri.parse(url));
@@ -19,6 +21,7 @@ class GoogleAPIService {
   List<Book> _parseBookJson(String jsonStr) {
     final jsonMap = json.decode(jsonStr);
     final jsonList = (jsonMap['items'] as List);
+    log_dev.log(jsonList.length.toString());
     return jsonList
         .map(
           (jsonBook) => Book(

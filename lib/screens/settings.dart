@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import '../models/book_model.dart';
-import '../services/googleapi_service.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
