@@ -5,14 +5,7 @@ import '../models/book_model.dart';
 
 class GoogleAPIService {
   final String url =
-      'https://www.googleapis.com/books/v1/volumes?q=inauthor:Smith';
-
-  List<Book> fetchBooks() {
-    return List.generate(
-      100,
-      (i) => Book(title: 'Book $i', author: 'Author $i'),
-    );
-  }
+      'https://www.googleapis.com/books/v1/volumes?q=inauthor:King';
 
   Future<List<Book>> fetchPotterBooks() async {
     final res = await http.get(Uri.parse(url));
@@ -32,7 +25,8 @@ class GoogleAPIService {
             title: jsonBook['volumeInfo']['title'],
             author: (jsonBook['volumeInfo']['authors'] as List).join(', '),
             thumbnailUrl:
-                jsonBook['volumeInfo']['imageLinks']['smallThumbnail'],
+                'https://res.cloudinary.com/dpeqsj31d/image/upload/v1707263739/avatar_2_2.png',
+            // jsonBook['volumeInfo']['imageLinks']['smallThumbnail'],
           ),
         )
         .toList();

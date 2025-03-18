@@ -18,6 +18,7 @@ class HomePage extends StatelessWidget {
               return Text('Error: ${snapshot.error}');
             } else {
               return ListView(
+                shrinkWrap: true,
                 children: snapshot.data!.map((b) => BookTile(book: b)).toList(),
               );
             }
