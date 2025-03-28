@@ -2,10 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'bloc/appbarmenu/appbarmenu_bloc.dart';
 import 'screens/foundation.dart';
+import 'screens/login.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -23,7 +27,7 @@ class MyApp extends StatelessWidget {
       ),
       home: MultiBlocProvider(
         providers: [BlocProvider(create: (context) => AppMenuBloc())],
-        child: FoundationPage(),
+        child: LoginPage(), // FoundationPage(),
       ),
     );
   }
