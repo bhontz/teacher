@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../components/textfields.dart';
+import '../components/buttons.dart';
+
 // import '../models/book_model.dart';
 // import '../services/googleapi_service.dart';
 
@@ -8,6 +10,8 @@ class LoginPage extends StatelessWidget {
   final TextEditingController pwController = TextEditingController();
 
   LoginPage({super.key});
+
+  void login() {}
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +41,37 @@ class LoginPage extends StatelessWidget {
                 hintText: "Password",
                 obscureText: true,
                 controller: pwController,
+              ),
+              const SizedBox(height: 5),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    "Forgot Password?",
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              MyButton(text: "LogIn", onTap: login),
+              const SizedBox(height: 5),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Don't have an account?  "),
+                  GestureDetector(
+                    onTap: () {},
+                    child: Text(
+                      "Register Here",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

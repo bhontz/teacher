@@ -6,6 +6,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'bloc/appbarmenu/appbarmenu_bloc.dart';
 import 'screens/foundation.dart';
 import 'screens/login.dart';
+import 'screens/theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,10 +22,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Teacher',
-      theme: ThemeData(
-        useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
-      ),
+      theme: appTheme, // see theme.dart
       home: MultiBlocProvider(
         providers: [BlocProvider(create: (context) => AppMenuBloc())],
         child: LoginPage(), // FoundationPage(),
