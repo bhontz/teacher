@@ -5,14 +5,16 @@ import '../components/buttons.dart';
 // import '../models/book_model.dart';
 // import '../services/googleapi_service.dart';
 
-class LoginPage extends StatelessWidget {
+class RegisterPage extends StatelessWidget {
+  final TextEditingController usernameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController pwController = TextEditingController();
+  final TextEditingController pwconfirmController = TextEditingController();
   final void Function()? onTap;
 
-  LoginPage({super.key, required this.onTap});
+  RegisterPage({super.key, required this.onTap});
 
-  void login() {}
+  void register() {}
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +35,12 @@ class LoginPage extends StatelessWidget {
               Text("T E A C H E R", style: TextStyle(fontSize: 20)),
               const SizedBox(height: 12),
               MyTextField(
+                hintText: "Username",
+                obscureText: false,
+                controller: usernameController,
+              ),
+              const SizedBox(height: 10),
+              MyTextField(
                 hintText: "Email",
                 obscureText: false,
                 controller: emailController,
@@ -43,29 +51,35 @@ class LoginPage extends StatelessWidget {
                 obscureText: true,
                 controller: pwController,
               ),
-              const SizedBox(height: 5),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    "Forgot Password?",
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.secondary,
-                    ),
-                  ),
-                ],
+              const SizedBox(height: 10),
+              MyTextField(
+                hintText: "Confirm Password",
+                obscureText: true,
+                controller: pwconfirmController,
               ),
+              const SizedBox(height: 5),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.end,
+              //   children: [
+              //     Text(
+              //       "Forgot Password?",
+              //       style: TextStyle(
+              //         color: Theme.of(context).colorScheme.secondary,
+              //       ),
+              //     ),
+              //   ],
+              // ),
               const SizedBox(height: 20),
-              MyButton(text: "LogIn", onTap: login),
+              MyButton(text: "Register", onTap: register),
               const SizedBox(height: 5),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Don't have an account?  "),
+                  Text("Already have an account?  "),
                   GestureDetector(
                     onTap: onTap,
                     child: Text(
-                      "Register Here",
+                      "Login Here",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         decoration: TextDecoration.underline,

@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'bloc/appbarmenu/appbarmenu_bloc.dart';
-import 'screens/foundation.dart';
-import 'screens/login.dart';
+import 'bloc/authscreens/auth_bloc.dart';
+import 'screens/login_or_register.dart';
 import 'screens/theme.dart';
 
 void main() async {
@@ -24,8 +24,12 @@ class MyApp extends StatelessWidget {
       title: 'Teacher',
       theme: appTheme, // see theme.dart
       home: MultiBlocProvider(
-        providers: [BlocProvider(create: (context) => AppMenuBloc())],
-        child: LoginPage(), // FoundationPage(),
+        providers: [
+          BlocProvider(create: (context) => AppMenuBloc()),
+          BlocProvider(create: (context) => AuthScreensBloc()),
+        ],
+        child:
+            LoginOrRegister(), // RegisterPage(), // LoginPage(), // FoundationPage(),
       ),
     );
   }
