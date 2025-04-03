@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import '../components/textfields.dart';
 import '../components/buttons.dart';
 
@@ -12,9 +13,40 @@ class RegisterPage extends StatelessWidget {
   final TextEditingController pwconfirmController = TextEditingController();
   final void Function()? onTap;
 
+  final pwTestPattern = RegularExpressionPatterns.passwordPattern();
+  final emailTestPattern = RegularExpressionPatterns.emailPattern();
+  final pwRequirements = RegularExpressionPatterns.passwordRequirements();
+
   RegisterPage({super.key, required this.onTap});
 
-  void register() {}
+  void displayMessageToUser(String message, BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(title: Text(message)),
+    );
+  }
+
+  void registerUser(BuildContext context) async {
+    if (!emailTestPattern.hasMatch(emailController.text)) {
+      displayMessageToUser("Invalid email address", context);
+    } else if (!pwTestPattern.hasMatch(pwController.text)) {
+      displayMessageToUser(pwRequirements, context);
+    } else if (pwController.text != pwconfirmController.text) {
+      displayMessageToUser("Passwords don't match!", context);
+    } else {
+      // displayMessageToUser("All is good!", context);
+      try {
+        UserCredential? userCredential = await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(
+              email: emailController.text,
+              password: pwController.text,
+            );
+      } on FirebaseAuthException catch (e) {
+        // ignore: use_build_context_synchronously
+        displayMessageToUser(e.code, context);
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +102,7 @@ class RegisterPage extends StatelessWidget {
               //   ],
               // ),
               const SizedBox(height: 20),
-              MyButton(text: "Register", onTap: register),
+              MyButton(text: "Register", onTap: () => registerUser(context)),
               const SizedBox(height: 5),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

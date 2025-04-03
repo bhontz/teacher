@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import '../components/textfields.dart';
 import '../components/buttons.dart';
 
@@ -10,9 +11,37 @@ class LoginPage extends StatelessWidget {
   final TextEditingController pwController = TextEditingController();
   final void Function()? onTap;
 
+  final pwTestPattern = RegularExpressionPatterns.passwordPattern();
+  final emailTestPattern = RegularExpressionPatterns.emailPattern();
+  final pwRequirements = RegularExpressionPatterns.passwordRequirements();
+
   LoginPage({super.key, required this.onTap});
 
-  void login() {}
+  // THIS IS REDUNDANT GET IT INTO ANOTHER FILE
+  void displayMessageToUser(String message, BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(title: Text(message)),
+    );
+  }
+
+  void login(BuildContext context) async {
+    if (!emailTestPattern.hasMatch(emailController.text)) {
+      displayMessageToUser("Invalid email address", context);
+    } else if (!pwTestPattern.hasMatch(pwController.text)) {
+      displayMessageToUser(pwRequirements, context);
+    } else {
+      try {
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: emailController.text,
+          password: pwController.text,
+        );
+      } on FirebaseAuthException catch (e) {
+        // ignore: use_build_context_synchronously
+        displayMessageToUser(e.code, context);
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +85,7 @@ class LoginPage extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 20),
-              MyButton(text: "LogIn", onTap: login),
+              MyButton(text: "LogIn", onTap: () => login(context)),
               const SizedBox(height: 5),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

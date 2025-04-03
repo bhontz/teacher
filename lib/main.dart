@@ -10,7 +10,17 @@ import 'screens/theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: FirebaseOptions(
+      // you need these to support web operation
+      apiKey: "AIzaSyB4GfZvyKTbTX7eVY5nf-zog-_64L4Gdpw",
+      authDomain: "teacher-project-3f7c9.firebaseapp.com",
+      projectId: "teacher-project-3f7c9",
+      storageBucket: "teacher-project-3f7c9.firebasestorage.app",
+      messagingSenderId: "1039833585490",
+      appId: "1:1039833585490:web:57748dc24ab714492e0c8b",
+    ),
+  );
   runApp(const MyApp());
 }
 
