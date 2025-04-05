@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:teacher/firebase_options.dart';
 import 'bloc/appbarmenu/appbarmenu_bloc.dart';
 import 'bloc/authscreens/auth_bloc.dart';
 import 'screens/login_or_register.dart';
@@ -10,17 +11,7 @@ import 'screens/theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: FirebaseOptions(
-      // you need these to support web operation
-      apiKey: "AIzaSyB4GfZvyKTbTX7eVY5nf-zog-_64L4Gdpw",
-      authDomain: "teacher-project-3f7c9.firebaseapp.com",
-      projectId: "teacher-project-3f7c9",
-      storageBucket: "teacher-project-3f7c9.firebasestorage.app",
-      messagingSenderId: "1039833585490",
-      appId: "1:1039833585490:web:57748dc24ab714492e0c8b",
-    ),
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 
