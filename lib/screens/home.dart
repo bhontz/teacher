@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:teacher/screens/comments.dart';
 import '../models/book_model.dart';
 import '../services/googleapi_service.dart';
 
@@ -44,6 +45,12 @@ class BookTile extends StatelessWidget {
       title: Text(book.title),
       subtitle: Text('${book.bookID} ${' - '} ${book.author}'),
       //   onTap: () => _navigateToDetailsPage(book, context),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => CommentsPage(book: book)),
+        );
+      },
     );
   }
 }
