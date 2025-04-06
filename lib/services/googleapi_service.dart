@@ -25,6 +25,7 @@ class GoogleAPIService {
     return jsonList
         .map(
           (jsonBook) => Book(
+            bookID: jsonBook['id'],
             title: jsonBook['volumeInfo']['title'],
             author: (jsonBook['volumeInfo']['authors'] as List).join(', '),
             thumbnailUrl:

@@ -42,7 +42,7 @@ class BookTile extends StatelessWidget {
     return ListTile(
       leading: CircleAvatar(backgroundImage: NetworkImage(thumbnail)),
       title: Text(book.title),
-      subtitle: Text(book.author),
+      subtitle: Text('${book.bookID} ${' - '} ${book.author}'),
       //   onTap: () => _navigateToDetailsPage(book, context),
     );
   }
