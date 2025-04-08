@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../components/textfields.dart';
 import '../components/buttons.dart';
+import 'foundation.dart';
 
 // import '../models/book_model.dart';
 // import '../services/googleapi_service.dart';
@@ -41,10 +43,27 @@ class RegisterPage extends StatelessWidget {
               email: emailController.text,
               password: pwController.text,
             );
+        createUserDocument(userCredential);
+        Navigator.of(
+          // ignore: use_build_context_synchronously
+          context,
+        ).push(MaterialPageRoute(builder: (context) => const FoundationPage()));
       } on FirebaseAuthException catch (e) {
         // ignore: use_build_context_synchronously
         displayMessageToUser(e.code, context);
       }
+    }
+  }
+
+  Future<void> createUserDocument(UserCredential? userCredential) async {
+    if (userCredential != null && userCredential.user != null) {
+      await FirebaseFirestore.instance
+          .collection("Users")
+          .doc(userCredential.user!.email)
+          .set({
+            'email': userCredential.user!.email,
+            'username': usernameController.text,
+          });
     }
   }
 
