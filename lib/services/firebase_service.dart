@@ -3,13 +3,27 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import '../models/comment_model.dart';
 import 'package:intl/intl.dart';
-import 'dart:developer' as logger;
 import 'dart:math';
 
 class FirestoreDatabase {
+  final String bookId;
+
+  FirestoreDatabase({required this.bookId});
+
   User? user = FirebaseAuth.instance.currentUser; // part of the database key
-  final CollectionReference commentsCollection = FirebaseFirestore.instance
-      .collection('Testing');
+
+  CollectionReference fbCollection(bookId) {
+    return FirebaseFirestore.instance
+        .collection('Comments')
+        .doc(bookId)
+        .collection('Comments');
+  }
+
+  // // original below
+  // final CollectionReference commentsCollection = FirebaseFirestore.instance
+  //     .collection('Comments')
+  //     .doc(bookId)
+  //     .collection('Comments');
 
   String createMessageId() {
     var rng = Random();
@@ -19,8 +33,11 @@ class FirestoreDatabase {
   }
 
   Future<void> addComment(String commentText) {
-    return commentsCollection.add({
-      'messageId': createMessageId(),
+    String messageId = createMessageId();
+    var commentsCollection = fbCollection(bookId);
+    var docRef = commentsCollection.doc(messageId);
+    return docRef.set({
+      'messageId': messageId,
       'userId': user?.email,
       'comment': commentText,
       'timestamp': DateTime.now(),
@@ -28,8 +45,8 @@ class FirestoreDatabase {
   }
 
   Stream<QuerySnapshot> getComments() {
-    final commentStream =
-        FirebaseFirestore.instance.collection('Testing').snapshots();
+    var commentsCollection = fbCollection(bookId);
+    final commentStream = commentsCollection.snapshots();
 
     return commentStream;
   }

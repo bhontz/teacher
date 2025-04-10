@@ -49,7 +49,7 @@ class BookTile extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => CommentsPage(),
+            builder: (context) => CommentsPage(book: book),
           ), // was CommentsPage(book: book)
         );
       },
