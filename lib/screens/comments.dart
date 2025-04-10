@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import '../models/book_model.dart';
 import '../services/firebase_service.dart';
 
 class CommentsPage extends StatelessWidget {
   final Book book;
+  final User? user =
+      FirebaseAuth.instance.currentUser; // part of the database key
 
   CommentsPage({super.key, required this.book});
 
@@ -15,7 +18,7 @@ class CommentsPage extends StatelessWidget {
     var database = FirestoreDatabase(bookId: book.bookId);
     return Scaffold(
       appBar: AppBar(
-        title: Text('${'Comments for '}${book.title}'),
+        title: Column(children: [Text('Comments for:'), Text(book.title)]),
       ), // was ${book.title}
       body: Column(
         children: [
@@ -40,8 +43,34 @@ class CommentsPage extends StatelessWidget {
                   itemBuilder: (context, index) {
                     final comment = commentList[index];
                     return ListTile(
-                      title: Text(comment['comment']),
-                      subtitle: Text(comment['userId']),
+                      title: Column(
+                        children: [
+                          Text(comment['userId']),
+                          SizedBox(width: 5),
+                          Text(comment['comment']),
+                        ],
+                      ),
+                      trailing: IconButton(
+                        icon: const Icon(Icons.delete),
+                        onPressed: () {
+                          if (user?.email == comment['userId']) {
+                            database.deleteComment(comment['messageId']);
+                          } else {
+                            showDialog(
+                              context: context,
+                              builder:
+                                  (context) => AlertDialog(
+                                    title: Text(
+                                      'You can only delete your own comments!',
+                                    ),
+                                  ),
+                            );
+                          }
+                        },
+                        // () => database.deleteComment(comment['messageId']),
+                      ),
+                      // title: Text(comment['comment']),
+                      // subtitle: Text(comment['userId']),
                     );
                   },
                 ),

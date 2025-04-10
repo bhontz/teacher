@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import '../models/comment_model.dart';
+import 'dart:developer' as logger;
 import 'package:intl/intl.dart';
 import 'dart:math';
 
@@ -42,6 +43,16 @@ class FirestoreDatabase {
       'comment': commentText,
       'timestamp': DateTime.now(),
     });
+  }
+
+  void deleteComment(String messageId) async {
+    var commentsCollection = fbCollection(bookId);
+    var docRef = commentsCollection.doc(messageId);
+    try {
+      await docRef.delete();
+    } catch (e) {
+      logger.log('$e');
+    }
   }
 
   Stream<QuerySnapshot> getComments() {
