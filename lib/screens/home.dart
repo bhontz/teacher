@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:teacher/screens/comments.dart';
 import '../models/book_model.dart';
+import '../screens/comments.dart';
 import '../services/googleapi_service.dart';
 
 class HomePage extends StatelessWidget {
@@ -48,9 +48,20 @@ class BookTile extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => CommentsPage(book: book)),
+          MaterialPageRoute(
+            builder: (context) => CommentsPage(),
+          ), // was CommentsPage(book: book)
         );
       },
+
+      // onTap: () {
+      //   Navigator.push(
+      //     context,
+      //     MaterialPageRoute(
+      //       builder: (context) => CommentsPage(),
+      //     ), // was CommentsPage(book: book)
+      //   );
+      // },
     );
   }
 }

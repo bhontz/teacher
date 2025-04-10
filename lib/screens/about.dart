@@ -15,6 +15,5 @@ class AboutPage extends StatelessWidget {
         ),
       ),
     );
-    // return Center(child: Text("This is the ABOUT PAGE!"));
   }
 }

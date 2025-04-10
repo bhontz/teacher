@@ -21,7 +21,7 @@ class GoogleAPIService {
   List<Book> _parseBookJson(String jsonStr) {
     final jsonMap = json.decode(jsonStr);
     final jsonList = (jsonMap['items'] as List);
-    log_dev.log(jsonList.length.toString());
+    // log_dev.log(jsonList.length.toString());  // here's how you log something!
     return jsonList
         .map(
           (jsonBook) => Book(

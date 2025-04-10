@@ -5,9 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:teacher/firebase_options.dart';
 import 'bloc/appbarmenu/appbarmenu_bloc.dart';
-import 'bloc/commentlist/listcomments_bloc.dart';
 import 'bloc/authscreens/auth_bloc.dart';
 import 'screens/login_or_register.dart';
+import 'screens/foundation.dart';
 import 'screens/theme.dart';
 
 void main() async {
@@ -29,7 +29,6 @@ class MyApp extends StatelessWidget {
         providers: [
           BlocProvider(create: (context) => AppMenuBloc()),
           BlocProvider(create: (context) => AuthScreensBloc()),
-          BlocProvider(create: (context) => CommentListBloc()),
         ],
         child:
             LoginOrRegister(), // RegisterPage(), // LoginPage(), // FoundationPage(),
